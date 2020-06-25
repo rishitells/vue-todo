@@ -25,6 +25,8 @@ import Input from "./components/Input";
 import List from "./components/List";
 import FilterTodo from "./components/FilterTodo";
 
+import axios from 'axios'
+
 let currentTodoId = 1;
 
 export default {
@@ -42,9 +44,18 @@ export default {
       visibilityFilter: 'all'
     };
   },
+  created() {
+    axios.get("https://jsonplaceholder.typicode.com/todos?_limit=8")
+            .then(response => {
+              console.log(response.data)
+              this.todos = response.data;
+            }, err => {
+              console.log(err);
+            });
+  },
   methods: {
     addTodo: function(value) {
-      this.todos.push({ id: currentTodoId, text: value, completed: false });
+      this.todos.push({ id: currentTodoId, title: value, completed: false });
       currentTodoId++;
     },
     deleteTodo: function(id) {

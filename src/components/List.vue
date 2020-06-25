@@ -7,7 +7,7 @@
         @click="toggleTodoCompletion(todo.id)"
         v-bind:class="{ completed: todo.completed }"
       >
-        {{ todo.text }} <button data-testid="delete-todo" @click="deleteTodo(todo.id)">delete</button>
+        {{ todo.title }} <button data-testid="delete-todo" @click="deleteTodo(todo.id)">delete</button>
       </li>
     </ul>
   </div>
