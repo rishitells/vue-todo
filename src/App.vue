@@ -45,11 +45,8 @@ export default {
     ...mapGetters(['todos'])
   },
   methods: {
-    ...mapActions(['fetchTodos', 'addTodo']),
+    ...mapActions(['fetchTodos', 'addTodo', 'deleteTodo']),
 
-    deleteTodo: function(id) {
-      this.todos = this.todos.filter(todo => id !== todo.id);
-    },
     toggleTodoCompletion: function(id) {
       this.todos = this.todos.map(todo => {
         if (todo.id === id) {

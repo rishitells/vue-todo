@@ -17,3 +17,12 @@ export const post = (url, data, config) => {
         throw err.response;
     });
 }
+
+export const deleteReq = (url, config) => {
+    return API.delete(url, config).then(response => {
+        return response.data;
+    }, err => {
+        console.log(err.response);
+        throw err.response;
+    });
+}
