@@ -45,20 +45,20 @@ export default {
     ...mapGetters(['todos'])
   },
   methods: {
-    ...mapActions(['fetchTodos', 'addTodo', 'deleteTodo']),
+    ...mapActions(['fetchTodos', 'addTodo', 'deleteTodo', 'toggleTodoCompletion']),
 
-    toggleTodoCompletion: function(id) {
-      this.todos = this.todos.map(todo => {
-        if (todo.id === id) {
-          return {
-            ...todo,
-            completed: !todo.completed
-          };
-        }
-
-        return todo;
-      });
-    },
+    // toggleTodoCompletion: function(id) {
+    //   this.todos = this.todos.map(todo => {
+    //     if (todo.id === id) {
+    //       return {
+    //         ...todo,
+    //         completed: !todo.completed
+    //       };
+    //     }
+    //
+    //     return todo;
+    //   });
+    // },
   },
   created() {
     this.fetchTodos();

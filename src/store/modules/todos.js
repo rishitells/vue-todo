@@ -1,11 +1,14 @@
-import {deleteReq, get, post} from "../../api/requests";
+import {deleteReq, get, post, put} from "../../api/requests";
 
 const state = {
     todos: []
 }
 
 const getters = {
-    todos: (state) => state.todos
+    todos: (state) => state.todos,
+    getTodoById: (state) => (id) => {
+        return state.todos.find(todo => todo.id === id);
+    }
 }
 
 const mutations = {
@@ -15,6 +18,15 @@ const mutations = {
 
     addNewTodo: (state, todo) => {
         state.todos.unshift(todo);
+    },
+
+    updateTodo: (state, {id, updatedTodo}) => {
+        state.todos = state.todos.map(todo => {
+            if(todo.id === id) {
+                return  {...updatedTodo}
+            }
+            return todo;
+        });
     },
 
     removeTodo(state, id) {
@@ -39,6 +51,16 @@ const actions = {
     async deleteTodo({commit}, id) {
         await deleteReq(`https://jsonplaceholder.typicode.com/todos/${id}`);
         commit('removeTodo', id);
+    },
+
+    async toggleTodoCompletion({commit, getters}, id) {
+        const todo = getters.getTodoById(id);
+        const updatedData = {
+            ...todo,
+            completed: !todo.completed
+        }
+        const response = await put(`https://jsonplaceholder.typicode.com/todos/${id}`, updatedData);
+        commit('updateTodo', {id, updatedTodo: response});
     }
 }
 
