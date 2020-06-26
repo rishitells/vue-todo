@@ -24,8 +24,8 @@ import Title from "./components/Title.vue";
 import Input from "./components/Input";
 import List from "./components/List";
 import FilterTodo from "./components/FilterTodo";
+import {mapActions, mapGetters} from "vuex";
 
-import axios from 'axios'
 
 let currentTodoId = 1;
 
@@ -40,20 +40,15 @@ export default {
   data: function() {
     return {
       inputValue: "",
-      todos: [],
       visibilityFilter: 'all'
     };
   },
-  created() {
-    axios.get("https://jsonplaceholder.typicode.com/todos?_limit=8")
-            .then(response => {
-              console.log(response.data)
-              this.todos = response.data;
-            }, err => {
-              console.log(err);
-            });
+  computed: {
+    ...mapGetters(['todos'])
   },
   methods: {
+    ...mapActions(['fetchTodos']),
+
     addTodo: function(value) {
       this.todos.push({ id: currentTodoId, title: value, completed: false });
       currentTodoId++;
@@ -73,6 +68,9 @@ export default {
         return todo;
       });
     },
+  },
+  created() {
+    this.fetchTodos();
   }
 };
 </script>
