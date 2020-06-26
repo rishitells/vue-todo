@@ -27,8 +27,6 @@ import FilterTodo from "./components/FilterTodo";
 import {mapActions, mapGetters} from "vuex";
 
 
-let currentTodoId = 1;
-
 export default {
   name: "App",
   components: {
@@ -47,12 +45,8 @@ export default {
     ...mapGetters(['todos'])
   },
   methods: {
-    ...mapActions(['fetchTodos']),
+    ...mapActions(['fetchTodos', 'addTodo']),
 
-    addTodo: function(value) {
-      this.todos.push({ id: currentTodoId, title: value, completed: false });
-      currentTodoId++;
-    },
     deleteTodo: function(id) {
       this.todos = this.todos.filter(todo => id !== todo.id);
     },
